@@ -1,23 +1,42 @@
-# 🛡️ TamperNet — Image Tampering Detection Using Deep Learning & Forensic Feature Analysis
+# 🛡️ TamperNet — Image Tampering Detection Using Deep Learning
 
-**Deep learning–based digital image forensics system for detecting manipulated images using semantic and forensic feature analysis**
+**Deep Learning–Based Digital Image Forensics & Manipulation Detection System**
 
-**Dual Branch CNN • MobileNetV2 • Forensic Attention Transformer • Computer Vision • Digital Forensics**
+*Dual Branch CNN • MobileNetV2 • Forensic Attention Transformer • Computer Vision • Digital Forensics*
+
+---
+
+### 🚀 Automated Image Tampering Detection & Forensic Analysis
+
+TamperNet is a **deep learning-based digital image forensics system** designed to detect manipulated images by combining **high-level semantic information with low-level forensic evidence**.
+
+The system uses a **Dual Branch CNN architecture** to analyze images through complementary semantic and forensic pathways, followed by a **Forensic Attention Transformer** for feature fusion and tampering classification.
+
+**93.6% accuracy across 12,615 test samples**
+
+[Architecture](#-architecture) • [My Contribution](#-my-individual-contribution) • [Technical Approach](#-technical-approach) • [Results](#-results) • [Datasets](#-datasets) • [Technology Stack](#-technology-stack) • [Future Work](#-future-work)
 
 ---
 
 ## 🎯 What It Does
 
-TamperNet is a **deep learning-based image tampering detection system** designed to identify manipulated digital images by combining **high-level semantic information with low-level forensic evidence**.
+TamperNet analyzes digital images for signs of manipulation by combining **semantic image understanding** with **forensic artifact analysis**.
 
-The system uses a **Dual Branch CNN architecture** to analyze images through two complementary pathways:
+The system processes images through two complementary branches:
 
-* **Global Semantic Branch** — captures high-level visual and contextual features using a pre-trained **MobileNetV2** backbone.
-* **Forensic Feature Branch** — analyzes manipulation-related artifacts such as **noise inconsistencies, edge artifacts, and compression traces**.
+* 🧠 **Global Semantic Branch** — extracts high-level visual and contextual features using a pre-trained **MobileNetV2** backbone.
+* 🔍 **Forensic Feature Branch** — analyzes manipulation-related evidence including **noise inconsistencies, edge artifacts, and compression traces**.
 
-The extracted representations are combined using a **Forensic Attention Transformer**, allowing the model to focus on informative forensic signals before making the final tampering prediction.
+The extracted representations are then combined using a **Forensic Attention Transformer**, enabling the system to focus on informative forensic signals before producing the final prediction.
 
-The system achieved **93.6% accuracy across 12,615 test samples**.
+### Detection Output
+
+The system classifies an image as:
+
+* ✅ **Authentic**
+* ⚠️ **Tampered**
+
+For manipulated images, the system also supports **heatmap visualization** to highlight regions potentially associated with tampering.
 
 ---
 
@@ -37,142 +56,108 @@ The system achieved **93.6% accuracy across 12,615 test samples**.
 
 ---
 
-## 🏗️ System Architecture
+# 🏗️ Architecture
 
 ### Pipeline Overview
 
 ```text
-                         Input Image
-                              │
-                ┌─────────────┴─────────────┐
-                │                           │
-                ▼                           ▼
-       Global Semantic Branch       Forensic Feature Branch
-                │                           │
-         MobileNetV2              ┌─────────┼─────────┐
-         Feature Extraction       │         │         │
-                │                Noise     Edge    Compression
-                │               Analysis   Artifacts  Traces
-                │                           │
-                └─────────────┬─────────────┘
-                              │
-                              ▼
-                  Forensic Attention
-                      Transformer
-                              │
-                              ▼
-                     Feature Fusion
-                              │
-                              ▼
-                   Tampering Detection
-                              │
-                    ┌─────────┴─────────┐
-                    ▼                   ▼
-                Authentic            Tampered
-                                        │
-                                        ▼
-                              Heatmap Visualization
+                           Input Image
+                                │
+                 ┌──────────────┴──────────────┐
+                 │                             │
+                 ▼                             ▼
+       Global Semantic Branch        Forensic Feature Branch
+                 │                             │
+          MobileNetV2                ┌─────────┼─────────┐
+       Feature Extraction            │         │         │
+                 │                  Noise     Edge    Compression
+                 │                Analysis   Artifacts   Traces
+                 │                             │
+                 └──────────────┬──────────────┘
+                                │
+                                ▼
+                    Forensic Attention
+                         Transformer
+                                │
+                                ▼
+                       Feature Fusion
+                                │
+                                ▼
+                     Tampering Detection
+                                │
+                    ┌───────────┴───────────┐
+                    ▼                       ▼
+                Authentic                Tampered
+                                            │
+                                            ▼
+                                   Heatmap Visualization
 ```
 
-The architecture combines **semantic understanding** and **forensic evidence** rather than relying solely on conventional image classification features.
+The architecture combines **semantic understanding and forensic evidence** rather than relying solely on conventional image classification features.
 
 ---
 
-## 🔬 Core Technical Approach
+# 🔬 Technical Approach
 
-### ① Global Semantic Feature Extraction
+## ① Global Semantic Feature Extraction
 
 A pre-trained **MobileNetV2** backbone is used to extract high-level visual representations from input images.
 
-This branch captures contextual information such as:
+This branch captures:
 
 * Objects and structures
 * Spatial patterns
 * Overall image semantics
 * High-level visual representations
 
-Transfer learning with MobileNetV2 provides a strong feature representation while reducing the amount of training required from scratch.
+Transfer learning allows the system to leverage an established feature representation while reducing the amount of training required from scratch.
 
 ---
 
-### ② Forensic Feature Analysis
+## ② Forensic Feature Analysis
 
-The second branch focuses on subtle image artifacts that may indicate manipulation.
+The second branch focuses on subtle image artifacts that can provide evidence of manipulation.
 
-TamperNet incorporates:
+### Noise Inconsistencies
 
-**Noise Inconsistencies**
+Analyzes differences in noise characteristics that may occur between authentic and manipulated regions.
 
-Analyzes differences in noise characteristics that may occur between authentic and manipulated portions of an image.
+### Edge Artifacts
 
-**Edge Artifacts**
+Examines irregularities around object boundaries and manipulated regions that can result from image editing operations.
 
-Examines irregularities around object boundaries and manipulated regions that may result from editing operations.
-
-**Compression Traces**
+### Compression Traces
 
 Uses compression-related inconsistencies as additional forensic evidence for detecting manipulated content.
 
-These signals complement the semantic information extracted by the MobileNetV2 branch.
+These forensic signals complement the semantic representations generated by the MobileNetV2 branch.
 
 ---
 
-### ③ Forensic Attention Transformer
+## ③ Forensic Attention Transformer
 
-The **Forensic Attention Transformer** is used to integrate the semantic and forensic representations.
+The **Forensic Attention Transformer** integrates the semantic and forensic representations.
 
-The attention mechanism allows the model to emphasize **informative forensic features** while combining them with global image representations.
+Its attention mechanism enables the model to emphasize **informative forensic features** while combining them with global image representations.
 
-This produces a richer representation for the final tampering classification stage.
+This produces a richer feature representation for the final tampering classification stage.
 
 ---
 
-### ④ Tampering Detection & Visualization
+## ④ Tampering Detection & Visualization
 
-The fused representation is passed through the classification pipeline to determine whether an image is:
+The fused representation is passed through the classification pipeline to determine whether the image is:
 
 * **Authentic**
 * **Tampered**
 
-The system also supports **heatmap-based visualization** to provide an interpretable indication of regions potentially associated with manipulation.
-
----
-
-# 👥 Team Collaboration
-
-TamperNet was developed by a **two-person team**, with responsibilities divided across model development, data preparation, experimentation, evaluation, and system integration.
-
-We worked collaboratively rather than developing isolated components. The project followed an iterative workflow:
-
-```text
-Dataset Preparation
-        ↓
-Preprocessing
-        ↓
-Feature Engineering
-        ↓
-Model Development
-        ↓
-Forensic Feature Integration
-        ↓
-Training & Experimentation
-        ↓
-Evaluation
-        ↓
-Inference & Visualization
-        ↓
-Final System Integration
-```
-
-My primary responsibility was the **core deep learning architecture and forensic analysis pipeline**, while the other team member contributed to complementary project components and experimentation.
-
-We continuously integrated our work into the same training and inference pipeline, evaluated results together, and refined the system based on model performance.
+The system also supports **heatmap-based visualization**, providing an interpretable indication of regions potentially associated with manipulation.
 
 ---
 
 # 👩‍💻 My Individual Contribution
 
-As one of the two developers, I was responsible for designing and implementing the **core detection architecture and integrating the forensic analysis components into the end-to-end system**.
+As one of the two developers, I was responsible for designing and implementing the **core deep learning architecture and integrating the forensic analysis components into the end-to-end detection pipeline**.
 
 ### 🧠 Model Architecture
 
@@ -208,41 +193,73 @@ Developed the training and inference workflows using **Python and TensorFlow/Ker
 
 ### 📊 Visualization
 
-Developed the workflow for generating **tampering heatmaps**, providing a visual representation of areas potentially associated with manipulation.
+Developed the workflow for generating **tampering heatmaps**, providing a visual representation of areas potentially associated with image manipulation.
 
-### 🔗 Integration With the Team's Work
+### 🔗 System Integration
 
-My model components were integrated with the team's dataset preparation, experimentation, evaluation, and visualization workflows.
+Integrated the model components with the team's dataset preparation, experimentation, evaluation, and visualization workflows.
 
-This required ensuring that the forensic feature pipeline, MobileNetV2 representations, attention-based feature fusion, training process, and inference outputs worked together as a single end-to-end system.
+This required ensuring that the **forensic feature pipeline, MobileNetV2 representations, attention-based feature fusion, training process, and inference outputs** operated together as a unified end-to-end system.
+
+---
+
+# 👥 Team Collaboration
+
+TamperNet was developed by a **two-person team**, with responsibilities distributed across model development, data preparation, experimentation, evaluation, and system integration.
+
+Our development workflow followed an iterative process:
+
+```text
+Dataset Preparation
+        ↓
+Preprocessing
+        ↓
+Feature Engineering
+        ↓
+Model Development
+        ↓
+Forensic Feature Integration
+        ↓
+Training & Experimentation
+        ↓
+Evaluation
+        ↓
+Inference & Visualization
+        ↓
+Final System Integration
+```
+
+My primary responsibility focused on the **core deep learning architecture and forensic analysis pipeline**, while the other team member contributed to complementary project components and experimentation.
+
+We continuously integrated our work into the same training and inference pipeline, evaluated results together, and refined the system based on model performance.
 
 ---
 
 # 📊 Results
 
+### 🏆 93.6% Accuracy
+
 The final model achieved:
 
-### **93.6% Accuracy**
+**93.6% accuracy on 12,615 test samples.**
 
-on **12,615 test samples**.
+The results demonstrate the potential of combining **deep semantic representations with low-level forensic features** for image tampering detection.
 
-The results demonstrated the potential of combining **deep semantic representations with low-level forensic features** for image tampering detection.
-
-The addition of forensic analysis also provided a basis for producing more interpretable outputs through tampering-region visualization.
+The forensic analysis pipeline also provides a foundation for more interpretable outputs through tampering-region visualization.
 
 ---
 
 # 📂 Datasets
 
-### CASIA V2
+## CASIA V2
 
 Benchmark dataset containing authentic and manipulated images for image-forensics research.
 
-### CASIA CMFD
+## CASIA CMFD
 
 Dataset used to evaluate the system on **copy-move forgery detection** scenarios.
 
-Due to dataset size and licensing restrictions, the datasets are not included in this repository.
+Due to dataset size and licensing restrictions, the datasets are **not included in this repository**.
 
 ---
 
@@ -278,34 +295,6 @@ Recommended augmentation techniques include:
 
 ---
 
-# 📁 Repository Contents
-
-```text
-TamperNet/
-│
-├── model/
-│   └── Dual Branch CNN implementation
-│
-├── training/
-│   └── Training and fine-tuning scripts
-│
-├── inference/
-│   └── Prediction and inference pipeline
-│
-├── visualization/
-│   └── Tampering heatmap generation
-│
-├── notebooks/
-│   └── Experiments and analysis
-│
-├── configs/
-│   └── Experiment configurations
-│
-└── README.md
-```
-
----
-
 # 🎯 Project Objective
 
 The objective of TamperNet is to enhance **digital image forensics** by combining deep learning with traditional forensic feature analysis.
@@ -316,26 +305,30 @@ Rather than treating tampering detection purely as an image-classification probl
 
 # 🚀 Future Work
 
-* **Multi-region tampering localization**
-* **Multi-modal forgery detection**
-* **Transformer-based forensic reasoning**
-* **Adversarial robustness evaluation**
+* Multi-region tampering localization
+* Multi-modal forgery detection
+* Transformer-based forensic reasoning
+* Adversarial robustness evaluation
 * Improved forensic explainability
 * More precise manipulated-region localization
 
 ---
 
-## ⭐ Key Takeaways
+# ⭐ Key Takeaways
 
-**TamperNet demonstrates practical experience in:**
+TamperNet demonstrates practical experience in:
 
-* Designing deep learning architectures
-* Transfer learning with MobileNetV2
-* Feature engineering for digital forensics
-* Transformer-based attention mechanisms
-* Computer vision and image processing
-* Building end-to-end ML pipelines
-* Team-based ML system development
-* Model evaluation on large benchmark datasets
+* 🧠 Designing deep learning architectures
+* 🔄 Transfer learning with MobileNetV2
+* 🔍 Feature engineering for digital forensics
+* 🤖 Transformer-based attention mechanisms
+* 👁️ Computer vision and image processing
+* ⚙️ Building end-to-end ML pipelines
+* 👥 Collaborative ML system development
+* 📊 Model evaluation on benchmark datasets
 
-**Final Result: 93.6% accuracy on 12,615 test samples**
+### Final Result
+
+**93.6% accuracy on 12,615 test samples**
+
+TamperNet demonstrates how **deep learning, computer vision, and digital forensic analysis** can be combined to build an interpretable image tampering detection system.
